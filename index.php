@@ -57,7 +57,7 @@ if (!isset($_SESSION['login'])) {
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                     
-                    <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
+                    <a href="logout.php" class="btn btn-danger btn-sm" onclick="return confirm('Ingin Logout?')">Logout</a>
                 </div>
             </div>
         </div>
