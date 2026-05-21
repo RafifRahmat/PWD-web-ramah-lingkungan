@@ -1,0 +1,41 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: lightgray;
+}
+
+.bg-hijau-custom {
+    background-color: darkgreen !important;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/LB_1.jpg') no-repeat center center/cover;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+\.category-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
+}
+
+.category-img {
+    height: 100px;
+    object-fit: contain;
+    margin-top: 25px;
+}
+.card-detail { 
+    border-radius: 20px; border: none; overflow: hidden; }
+
+.badge-bahaya { 
+    font-size: 0.9rem; padding: 8px 15px; border-radius: 10px; }
