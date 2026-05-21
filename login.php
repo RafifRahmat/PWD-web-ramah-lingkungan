@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
             <div class="row g-0">
                 
                 <div class="col-md-6 d-none d-md-block position-relative">
-                    <img src="assets/bersih.jpg" 
+                    <img src="img/bersih.jpeg" 
                          class="img-fluid h-100 w-100 position-absolute" 
                          style="object-fit: cover; object-position: center;" 
                          alt="Background">

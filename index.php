@@ -45,6 +45,9 @@ $conn->close();
                     <li class="nav-item">
                         <a class="nav-link active fw-semibold" href="index.php">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="bookmarkpage.php">Bookmark</a>
+                    </li>
                 </ul>
 
                 <div class="d-flex align-items-center">
@@ -72,7 +75,7 @@ $conn->close();
                 <div class="col-xl-3 col-md-6 col-sm-12">
                     <div class="card h-100 shadow-sm text-center category-card p-3">
                         
-                        <img src="<?= $category->logo_url ?>" class="card-img-top mx-auto category-img" alt="<?= $category->nama_kategori ?>" onerror="this.src='https://via.placeholder.com/100?text=No+Image'">
+                        <img src="<?= $category->logo_url ?>" class="card-img-top mx-auto category-img" alt="<?= $category->nama_kategori ?>"       >
                         
                         <div class="card-body d-flex flex-column">
                             <h4 class="card-title fw-bold mt-3">

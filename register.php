@@ -45,7 +45,7 @@ if (isset($_POST['register'])) {
                 
                 
                 <div class="col-md-6 d-none d-md-block position-relative">
-                    <img src="assets/bersih.jpg" 
+                    <img src="img/bersih.jpeg" 
                          class="img-fluid h-100 w-100 position-absolute" 
                          style="object-fit: cover;" 
                          alt="Background">

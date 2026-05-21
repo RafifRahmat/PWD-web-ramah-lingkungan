@@ -1,20 +1,24 @@
 <?php
+session_start();
 require_once 'config/koneksi.php';
 
-if (isset($_GET['id_kategori'])) {
-    $id_kategori = $_GET['id_kategori'];
-    $query = "SELECT * FROM sampah WHERE id_kategori = '$id_kategori'";
-    $category_name = $conn->query("SELECT * FROM kategori WHERE id_kategori = '$id_kategori'");
-    $category_result = $category_name->fetch_object()->nama_kategori;
+if (isset($_SESSION['user'])) {
+    $id_user = $_SESSION['user'];
+    $query = "SELECT bookmark.*, sampah.*, users.username 
+          FROM bookmark
+          JOIN sampah ON bookmark.id_sampah = sampah.id_sampah
+          JOIN users ON bookmark.id = users.id
+          WHERE bookmark.id = '$id_user'";
     $result = $conn->query($query);
 
-    if ($result->num_rows > 0) {
-        $sampah = [];
+    if ($result->num_rows > 0) {    
+        $bookmarks = [];
         while ($row = $result->fetch_object()) {
-            $sampah[] = $row;
+            $bookmarks[] = $row;
+            $username = $row->username;
         }
     } else {
-        $sampah = [];
+        $bookmarks = [];
     }
 } else {
     echo $conn->error;
@@ -31,7 +35,7 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <title>Kategori: <?= $category_result ?> - Pilah.IN</title>
+    <title>bookmark</title>
 </head>
 <body>
     
@@ -46,9 +50,6 @@ $conn->close();
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active fw-semibold" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active fw-semibold" href="bookmarkpage.php">Bookmark</a>
                     </li>
                 </ul>
 
@@ -67,11 +68,10 @@ $conn->close();
     <div class="container mt-5 mb-4">
         <div class="row align-items-center">
             <div class="col-md-8">
-                <h2 class="fw-bold text-dark">Daftar Sampah: <span class="text-success"><?= $category_result ?></span></h2>
-                <p class="text-muted">Berikut adalah jenis-jenis sampah yang termasuk ke dalam kelompok <?= $category_result ?>.</p>
+                <h2 class="fw-bold text-dark">Daftar Sampah: <span class="text-success"><?= $username ?></span></h2>
             </div>
             <div class="col-md-4 text-md-end">
-                <a href="index.php" class="btn btn-outline-success rounded-pill px-4 fw-semibold">← Kembali ke Kategori</a>
+                <a href="index.php" class="btn btn-outline-success rounded-pill px-4 fw-semibold">← Kembali ke Dashboard</a>
             </div>
         </div>
         <hr>
@@ -79,35 +79,35 @@ $conn->close();
 
     <div class="container my-4">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4 justify-content-start">
-            <?php foreach ($sampah as $trash): ?>
+            <?php foreach ($bookmarks as $bookmark): ?>
                 <div class="col">
                     <div class="card h-100 shadow-sm text-center category-card p-3">
                         
-                        <img src="<?= $trash->image_url ?>" class="card-img-top mx-auto category-img" alt="<?= $trash->nama_sampah ?>" onerror="this.src='https://via.placeholder.com/100?text=No+Image'" style="height: 120px; object-fit: contain;">
+                        <img src="<?= $bookmark->image_url ?>" class="card-img-top mx-auto category-img" alt="<?= $bookmark->nama_sampah ?>" style="height: 120px; object-fit: contain;">
                         
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div>
                                 <h4 class="card-title fw-bold mt-3 mb-2">
-                                    <a href="detail.php?id_sampah=<?= $trash->id_sampah ?>" class="text-dark text-decoration-none card-link">
-                                        <?= $trash->nama_sampah ?>
+                                    <a href="detail.php?id_sampah=<?= $bookmark->id_sampah ?>" class="text-dark text-decoration-none card-link">
+                                        <?= $bookmark->nama_sampah ?>
                                     </a>
                                 </h4>
                                 
                                 <?php 
                                     $badge_color = 'bg-success'; // Default: Rendah
-                                    if ($trash->tingkat_bahaya == 'Tinggi') {
+                                    if ($bookmark->tingkat_bahaya == 'Tinggi') {
                                         $badge_color = 'bg-danger';
-                                    } elseif ($trash->tingkat_bahaya == 'Sedang') {
+                                    } elseif ($bookmark->tingkat_bahaya == 'Sedang') {
                                         $badge_color = 'bg-warning text-dark';
                                     }
                                 ?>
                                 <span class="badge <?= $badge_color ?> rounded-pill px-3 py-2 small fw-semibold">
-                                    Bahaya: <?= $trash->tingkat_bahaya ?>
+                                    Bahaya: <?= $bookmark->tingkat_bahaya ?>
                                 </span>
                             </div>
                             
                             <div class="mt-4">
-                                <a href="detail.php?id_sampah=<?= $trash->id_sampah ?>" class="btn btn-success btn-sm w-100 rounded-pill fw-semibold py-2">
+                                <a href="detail.php?id_sampah=<?= $bookmark->id_sampah ?>" class="btn btn-success btn-sm w-100 rounded-pill fw-semibold py-2">
                                     Lihat Pengolahan
                                 </a>
                             </div>

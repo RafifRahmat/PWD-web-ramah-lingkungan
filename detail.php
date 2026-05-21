@@ -1,15 +1,20 @@
 <?php
+session_start();
 require_once 'config/koneksi.php';
 
 if (isset($_GET['id_sampah'])) {
     $id_sampah = $_GET['id_sampah'];
+    $id_user = $_SESSION['user'];
 
     $query = "SELECT sampah.*, kategori.nama_kategori 
               FROM sampah 
               JOIN kategori ON sampah.id_kategori = kategori.id_kategori 
               WHERE sampah.id_sampah = '$id_sampah'";
-              
     $result = $conn->query($query);
+    $check_query = "SELECT * FROM bookmark WHERE id = '$id_user' AND id_sampah = '$id_sampah'";
+    $result_check = $conn->query($check_query);
+    
+    $bookmark = ($result_check && $result_check->num_rows > 0);
 
     if ($result->num_rows > 0) {
         $data = $result->fetch_object();
@@ -46,11 +51,14 @@ if (isset($_GET['id_sampah'])) {
                     <li class="nav-item">
                         <a class="nav-link active fw-semibold" href="index.php">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="bookmarkpage.php">Bookmark</a>
+                    </li>
                 </ul>
 
                 <div class="d-flex align-items-center">
                     <form class="d-flex me-3" role="search" action="search.php" method="GET">
-                        <input class="form-control me-2 rounded-pill" type="search" name="keyword" placeholder="Nama Sampah..." aria-label="Search"/>
+                        <input class="form-control me-2 rounded-pill" type="search" name="keyword" placeholder="Nama Sampah" aria-label="Search"/>
                         <button class="btn btn-light text-success fw-bold rounded-pill" type="submit">Search</button>
                     </form>
                     
@@ -72,8 +80,11 @@ if (isset($_GET['id_sampah'])) {
                     <div class="col-md-7 p-5">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none">Home</a></li>
-                                <li class="breadcrumb-item active"><?= $data->nama_kategori ?></li>
+                                <?php if ($bookmark): ?>
+                                    <button class="btn btn-success rounded-pill" disabled>Bookmarked</button>
+                                <?php else: ?>
+                                    <a href="bookmark.php?id_sampah=<?= $id_sampah ?>" class="btn btn-outline-success rounded-pill">Bookmark</a>
+                                <?php endif; ?>
                             </ol>
                         </nav>
 
