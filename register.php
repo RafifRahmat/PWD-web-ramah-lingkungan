@@ -53,7 +53,7 @@ if (isset($_POST['register'])) {
 </head>
 <body class="background-light vh-100 d-flex align-items-center justify-content-center">
     <div class="container">
-        <div class="card shadow-lg border-0 overflow-hidden mx-auto" style="border-radius: 35px; max-width: 900px; min-height: 600px;">
+        <div class="card shadow-lg border-0 overflow-hidden mx-auto" style="border-radius: 35px; max-width: 900px; min-height: 6px;">
             <div class="row g-0">
                 
                 <div class="col-md-6 d-none d-md-block position-relative">

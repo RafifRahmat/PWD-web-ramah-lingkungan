@@ -65,7 +65,7 @@ $conn->close();
     <div class="hero-section mb-5">
         <div class="container">
             <h1 class="display-4 fw-bold mb-2">SELAMAT DATANG</h1>
-            <p class="lead fs-5">Pilih Kategori Sampah di Bawah Ini untuk Mulai Memilah</p>
+            <p class="lead fs-5">Yuk, mulai langkah kecil hari ini bersama Pilah.IN untuk menciptakan lingkungan yang lebih bersih dan berkelanjutan.</p>
         </div>
     </div>
 
