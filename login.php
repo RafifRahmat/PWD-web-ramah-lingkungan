@@ -2,6 +2,8 @@
 session_start();
 require_once 'config/koneksi.php';
 
+$error = "";
+
 if (isset($_POST['login'])) {
     $ne = $_POST['nama_email'];
     $pw = $_POST['password'];
@@ -19,10 +21,10 @@ if (isset($_POST['login'])) {
             header("Location: index.php");
             exit;
         } else {
-            echo "Password Anda Salah!";   
+            $error = "Password Anda Salah!";   
         }    
     } else {
-        echo "Anda Belum Mempunyai Akun!";
+        $error = "Anda Belum Mempunyai Akun!";
     }
 }
 ?>
@@ -62,6 +64,13 @@ if (isset($_POST['login'])) {
                         <h2 class="fw-bold mt-4 mb-1 text-center">Selamat Datang</h2>
                         <p class="text-muted small text-center">Silakan masuk untuk memulai menyelamatkan Bumi.</p>
                     </div>
+
+                    <?php if (!empty($error)): ?>
+                        <div class="alert alert-danger alert-dismissible fade show rounded-3 small py-2 mb-3" role="alert">
+                            <?= $error ?>
+                            <button type="button" class="btn-close py-2 small" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
 
                     <form action="" method="post">
                         <div class="mb-3">
